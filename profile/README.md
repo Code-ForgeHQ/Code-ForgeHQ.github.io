@@ -4,7 +4,9 @@
   <img src="https://img.shields.io/badge/ORGANIZATION-CODE--FORGE-161B22?style=for-the-badge&logo=github&logoColor=white" />
 </a>
 <img src="https://img.shields.io/badge/FOCUS-SOFTWARE%20DEVELOPMENT-0969DA?style=for-the-badge" />
-<img src="https://img.shields.io/badge/MINDSET-ENGINEERING-8957E5?style=for-the-badge" /></div>---
+<img src="https://img.shields.io/badge/MINDSET-ENGINEERING-8957E5?style=for-the-badge" /></div>
+
+---
 
 01 / WHO WE ARE
 
