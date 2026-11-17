@@ -1,41 +1,54 @@
 # AETHER Roadmap
 
-This roadmap describes project direction, not a promise that every item is already implemented.
+<p align="right"><a href="../README.md">← Project home</a></p>
+
+![Release](https://img.shields.io/badge/current%20release-1.0.0-ffffff?style=flat-square&labelColor=111820)
+![Planning](https://img.shields.io/badge/roadmap-evolving-9aa8b6?style=flat-square&labelColor=111820)
+
+> [!NOTE]
+> Completed items describe the current repository implementation. Planned milestones are directional and are not promises of delivery dates.
 
 ## Release 1.0 — Foundation
 
-- [x] Responsive application shell
-- [x] English primary interface and Persian secondary interface
+- [x] Responsive application shell for desktop and mobile
+- [x] English-first interface and Persian localization
+- [x] Overview command deck
 - [x] Workspace task management
-- [x] Local file records and import/export
-- [x] Notes and isolated web-code playground
+- [x] Local text files with import and export
+- [x] Notes and sandboxed code preview
 - [x] Encrypted local Vault
-- [x] Local network utility tools
+- [x] URL, IPv4 subnet, SHA-256, and UUID utilities
 - [x] Built-in application command console
-- [x] Local analytics and control settings
+- [x] Local analytics and Control module
 - [x] Code Forge organization documentation
-- [x] Installable/offline-capable application shell
+- [x] PWA manifest and offline application shell
+- [x] GitHub Actions static quality checks
 
-## Next milestones
+## 1.1 — Reliability
 
-### 1.1 — Reliability
-- Storage export/import bundles
-- Keyboard shortcut reference
-- More complete accessibility audit
-- Browser compatibility checks and automated smoke tests
+- [ ] Versioned backup format and import validation
+- [ ] Storage migration tests
+- [ ] Keyboard shortcut reference
+- [ ] Accessibility and screen-reader audit
+- [ ] Browser compatibility smoke tests
 
-### 1.2 — Workspace depth
-- Task groups, labels, and due-date filters
-- File collections and richer metadata
-- Note linking and reusable templates
-- User-defined dashboard layouts
+## 1.2 — Workspace depth
 
-### 1.3 — Engineering toolkit
-- More offline code utilities
-- Project templates and local snippets
-- Structured workspace backups
-- Import validation and migration tooling
+- [ ] Task groups, labels, and due-date filters
+- [ ] File collections and richer metadata
+- [ ] Note linking and reusable templates
+- [ ] User-defined overview layouts
 
-### Later — Optional connectivity
-- An opt-in synchronization design, only if a separately maintained backend is introduced.
-- No cloud sync, remote AI, or external API is assumed by the current architecture.
+## 1.3 — Developer toolkit
+
+- [ ] Local snippet library
+- [ ] More offline code utilities
+- [ ] Project templates
+- [ ] Expanded export and migration tools
+
+## Later — Optional connectivity
+
+- [ ] Evaluate an opt-in synchronization architecture
+- [ ] Publish a clear threat model before introducing remote storage
+
+Any future network-backed feature must be optional and documented. The current product does not depend on cloud sync, remote AI, or third-party APIs.
