@@ -1,23 +1,42 @@
 # AETHER Privacy Model
 
-## Default behavior
+<p align="right"><a href="../README.md">← Project home</a></p>
 
-AETHER runs in the user's browser. It does not require an account and the initial release does not send workspace contents to a server. There is no telemetry, advertising script, remote AI endpoint, or cloud synchronization layer in the application.
+![Data model](https://img.shields.io/badge/data%20model-local--first-ffffff?style=flat-square&labelColor=111820)
+![Telemetry](https://img.shields.io/badge/telemetry-none-9aa8b6?style=flat-square&labelColor=111820)
 
-## Local records
+## At a glance
 
-Tasks, notes, file entries, source snippets, settings, and activity are saved in browser local storage. This data is tied to the browser profile and site origin. It may be cleared by browser settings, private browsing sessions, device cleanup, or storage eviction.
+- No account is required.
+- Workspace data is stored in the current browser profile.
+- The application does not include analytics trackers or advertising scripts.
+- The current release does not upload workspace contents or synchronize devices.
+- Vault records are encrypted before they are persisted.
 
-## Vault records
+## Data inventory
 
-Vault content is encrypted before it is persisted. The key is derived from the user's passphrase with PBKDF2 and a random salt; each record uses a random AES-GCM initialization vector. The passphrase and derived key are not written to local storage. The derived key remains in memory while the Vault is unlocked.
+| Data category | Location | Included in workspace export |
+| --- | --- | --- |
+| Tasks and activity | Browser localStorage | Yes |
+| Files and notes | Browser localStorage | Yes |
+| Studio source | Browser localStorage | Yes |
+| Preferences | Browser localStorage | Yes |
+| Vault entries | Encrypted browser localStorage values | No |
 
-This does not protect against malware, a compromised browser, a compromised device, screen capture, weak passphrases, or someone using an already unlocked session. Lost passphrases cannot be recovered by the project.
+## Vault cryptography
 
-## Backups
+Vault keys are derived from a user-supplied passphrase with PBKDF2 and a random salt. Individual records are encrypted with AES-GCM and a random initialization vector. The passphrase and derived key are not written to localStorage.
 
-Workspace backups include ordinary local workspace records but exclude Vault entries. Vault export is not implemented in this release. Users should understand this boundary before relying on the Vault for critical information.
+This protects stored records against casual inspection of the raw local values. It does not protect against a compromised device, malicious browser extensions, an unlocked session, screen capture, or a weak passphrase.
 
-## External links
+## Retention and deletion
 
-The Code Forge page contains links to public GitHub pages. Opening those links leaves the local AETHER application and is subject to the destination site's privacy policy.
+AETHER stores data in the browser origin's storage. Users can remove it through browser site-data controls, but doing so may permanently remove local workspace and Vault records. Export important workspace records before clearing site data.
+
+## External destinations
+
+The Code Forge module links to public GitHub pages. Opening those links leaves the AETHER application and is subject to the destination site's own privacy practices.
+
+## Future changes
+
+Any future synchronization or remote integration must be opt-in, documented, and accompanied by an updated data-flow and retention description.
