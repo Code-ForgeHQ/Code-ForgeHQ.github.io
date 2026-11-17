@@ -49,5 +49,6 @@
 @media(prefers-reduced-motion:reduce){
   .ambient,.core-orbit,.status-dot,.footer-pulse{animation:none!important}
 }
-/* Keep inline action icons inside their controls; SVGs otherwise default to a 300×150 viewport. */
-.btn > svg{width:15px;height:15px;display:inline-block;flex:0 0 15px;max-width:15px;max-height:15px;overflow:visible}
+/* Global SVG defaults: icon() emits inline SVG without width/height or paint attributes. */
+svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;flex:none}
+.btn > svg{width:15px;height:15px;min-width:15px;min-height:15px;display:inline-block;flex:0 0 15px;max-width:15px;max-height:15px;overflow:visible}
