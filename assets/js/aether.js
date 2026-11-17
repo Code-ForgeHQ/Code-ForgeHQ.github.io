@@ -304,7 +304,7 @@ function initParticles(){
   if(!ctx)return {refresh:()=>{}};
   let w=0,h=0,dpr=1,points=[],pointer={x:-1000,y:-1000},rafId=0,lastFrame=0,visible=!document.hidden;
   const motionQuery=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
-  const reduced=!!(motionQuery&&motionQuery.matches);
+  let reduced=!!(motionQuery&&motionQuery.matches);
   const cores=navigator.hardwareConcurrency||4,memory=navigator.deviceMemory||4;
   const mobile=window.matchMedia&&window.matchMedia('(max-width: 820px)').matches;
   const maxPoints=Math.min(mobile?48:84,cores<=4||memory<=4?48:84);
@@ -319,7 +319,7 @@ function initParticles(){
     ctx.setTransform(actualDpr,0,0,actualDpr,0,0);
     const count=Math.min(maxPoints,Math.max(22,Math.round(w*h/19000)));
     points=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.1+.35,a:Math.random()*.48+.16,phase:Math.random()*7}));
-    drawStatic();
+    if(state.settings.particles)drawStatic();else ctx.clearRect(0,0,w,h);
   }
   function drawStatic(){
     ctx.clearRect(0,0,w,h);
@@ -362,7 +362,7 @@ function initParticles(){
   window.addEventListener('pointermove',e=>{if(!mobile){pointer.x=e.clientX;pointer.y=e.clientY}},{passive:true});
   window.addEventListener('pointerleave',()=>{pointer.x=-1000;pointer.y=-1000},{passive:true});
   document.addEventListener('visibilitychange',onVisibility);
-  if(motionQuery&&motionQuery.addEventListener)motionQuery.addEventListener('change',refresh);
+  if(motionQuery&&motionQuery.addEventListener)motionQuery.addEventListener('change',e=>{reduced=e.matches;refresh()});
   resize();refresh();
   return {refresh};
 }
