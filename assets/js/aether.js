@@ -327,7 +327,7 @@ function initParticles(){
   }
   function stop(){if(rafId){cancelAnimationFrame(rafId);rafId=0}}
   function refresh(){
-    if(!state.settings.particles||!visible||reduced){stop();drawStatic();return}
+    if(!state.settings.particles){stop();ctx.clearRect(0,0,w,h);return}if(!visible||reduced){stop();drawStatic();return}
     if(!rafId){lastFrame=0;rafId=requestAnimationFrame(frame)}
   }
   function frame(time){
