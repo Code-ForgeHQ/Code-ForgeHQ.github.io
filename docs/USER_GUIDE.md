@@ -1,54 +1,114 @@
 # AETHER User Guide
 
+<p align="right"><a href="../README.md">← Project home</a></p>
+
+![Guide](https://img.shields.io/badge/documentation-user%20guide-9aa8b6?style=flat-square&labelColor=111820)
+
+## Contents
+
+- [First launch](#first-launch)
+- [Navigation and command palette](#navigation-and-command-palette)
+- [Workspace](#workspace)
+- [Files](#files)
+- [Studio](#studio)
+- [Vault](#vault)
+- [Network](#network)
+- [Terminal](#terminal)
+- [Analytics and Control](#analytics-and-control)
+- [Backups](#backups)
+- [Offline use and installation](#offline-use-and-installation)
+
 ## First launch
 
-AETHER opens in English. Select FA in the top bar to switch to Persian. The language preference is saved in this browser. On phones, use the bottom dock for primary destinations and the menu button for the full module list. On desktop, use the persistent left navigation.
+AETHER starts in English. Select **FA** in the top bar to switch to Persian. The preference is saved in this browser.
 
-## Command palette
+| Device | Navigation |
+| --- | --- |
+| Desktop | Persistent sidebar |
+| Phone | Bottom navigation dock and slide-out module menu |
+| Tablet | Responsive layout based on available width |
 
-Press Ctrl+K (or Cmd+K on macOS) to search modules and jump directly to a destination. Press Escape to close it.
+## Navigation and command palette
+
+Press `Ctrl + K` (or `Cmd + K` on macOS) to open the command palette. Search for a module, use the keyboard to navigate, and press Enter to open it. Press Escape to close the overlay.
 
 ## Workspace
 
-Create tasks, add context, select a priority, and mark tasks complete. Use All, Open, and Done filters to narrow the list. Tasks and activity records are local to this browser.
+Create tasks with a title, optional context, and priority. Use **All**, **Open**, and **Done** filters to review progress. Mark tasks complete or edit and delete them from the task row.
+
+All task records are local to this browser.
 
 ## Files
 
-Create text files, import text-based files from your device, edit records, and export an individual file. The import flow reads file contents as text and skips files larger than 1 MB. The local file collection is not a cloud drive.
+Create text-based records, import text files from your device, edit their contents, and export individual files. The import flow reads content as text and skips files larger than 1 MB.
+
+> [!TIP]
+> Use descriptive file extensions such as `.md`, `.txt`, `.json`, and `.html` to keep your local collection organized.
+
+AETHER Files is a local text workspace, not a synchronized cloud drive or a general-purpose file-system browser.
 
 ## Studio
 
-The Notebook autosaves a selected note as you type. The code area supports HTML, CSS, and JavaScript tabs. Run Preview refreshes a sandboxed iframe; code runs inside that isolated preview and does not gain access to the parent application storage.
+Studio contains two areas:
 
-Use this feature only with code you trust. It is an experimentation area, not a secure malware-analysis sandbox.
+- **Notebook:** create and edit notes; the selected note autosaves locally.
+- **Code Studio:** switch between HTML, CSS, and JavaScript, then run the preview.
+
+The preview is rendered in a sandboxed iframe. It is an experimentation space for code you choose to run, not a secure malware-analysis environment.
 
 ## Vault
 
-On first use, create a passphrase of at least eight characters. AETHER derives a key using PBKDF2 and encrypts each record with AES-GCM before saving it. Later, enter the same passphrase to unlock the records.
+On first use, create a passphrase with at least eight characters. AETHER derives a key with PBKDF2 and encrypts each record using AES-GCM before saving it.
 
-The passphrase is never saved. If it is lost, encrypted records cannot be recovered. If browser data is cleared, local vault records may be lost. Keep a separate secure backup of anything important. Do not reuse a weak or exposed password.
+<details>
+  <summary>Vault security and recovery details</summary>
+
+  - The passphrase is not saved.
+  - The derived key stays in memory while the Vault is unlocked.
+  - Losing the passphrase means encrypted records cannot be recovered.
+  - Clearing browser storage can permanently remove local Vault records.
+  - A compromised or unlocked device can expose information.
+  - Workspace JSON exports deliberately exclude Vault records.
+
+</details>
+
+Use a strong, unique passphrase and keep separate backups of important information.
 
 ## Network
 
-- URL Inspector parses an HTTP or HTTPS URL locally.
-- IPv4 Subnet Calculator derives network, mask, broadcast, and host-count values from an IPv4 address and CIDR prefix.
-- SHA-256 computes a digest of text using the browser's Web Crypto API.
-- UUID creates a random version-4 identifier.
+| Tool | Function | Remote activity |
+| --- | --- | --- |
+| URL Inspector | Parses HTTP and HTTPS URL components | None |
+| IPv4 Subnet Calculator | Calculates network, mask, broadcast, and host counts | None |
+| SHA-256 | Hashes text using Web Crypto | None |
+| UUID | Generates a random version-4 identifier | None |
 
-These tools do not send requests or scan external networks.
+These are local utilities. They do not scan, probe, or connect to remote hosts.
 
 ## Terminal
 
-The Terminal understands a small built-in set of AETHER commands: help, about, modules, status, date, whoami, version, ls, tasks, open, lang, and clear. It is not a shell and cannot run operating-system commands.
+The built-in console supports a limited set of AETHER commands:
+
+```text
+help · about · modules · status · date · whoami
+version · ls · tasks · open · lang · clear
+```
+
+> [!WARNING]
+> This is not an operating-system shell. It cannot run system commands or launch external programs.
 
 ## Analytics and Control
 
-Analytics derives counts and completion percentages from your local workspace. Control contains language, visual effects, export, and import settings.
+Analytics derives task counts and completion metrics from the current local workspace. Control contains language, particle and glow preferences, and workspace data export/import actions.
 
 ## Backups
 
-Use Export workspace to download a JSON backup of tasks, files, notes, settings, and activity. Importing a backup replaces the current workspace records. Vault records are deliberately excluded because they are encrypted separately.
+Use **Export workspace** to download a JSON backup containing tasks, files, notes, settings, and activity. Importing a backup replaces the current workspace records.
 
-## Offline and installation
+Vault records are excluded because they are stored separately in encrypted form.
 
-After a successful visit, the service worker caches the application shell. Browser support and storage policies vary. For installation, use your browser's Add to Home Screen or Install App option when available.
+## Offline use and installation
+
+After the first successful visit, the service worker caches the application shell. Availability depends on browser storage and service-worker support.
+
+For installation, use the browser's **Install App** or **Add to Home Screen** command when offered. HTTPS or localhost is required for service workers and Web Crypto in supported browsers.
