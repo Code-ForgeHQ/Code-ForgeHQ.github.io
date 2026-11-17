@@ -1,41 +1,97 @@
 # AETHER Architecture
 
-## Overview
+<p align="right">
+  <a href="../README.md">← Project home</a>
+</p>
 
-AETHER is a static, client-side application. The repository is the deployment source, and the browser is the runtime. The first release deliberately avoids a backend so the application can run on GitHub Pages without credentials or external service dependencies.
+![Architecture status](https://img.shields.io/badge/architecture-static%20client--side-9aa8b6?style=flat-square&labelColor=111820)
+![Runtime](https://img.shields.io/badge/runtime-browser-local-ffffff?style=flat-square&labelColor=111820)
 
-## Layers
+> [!NOTE]
+> AETHER is intentionally deployable as a static site. The browser is the runtime; GitHub Pages serves the application assets.
 
-- **Presentation:** semantic HTML and responsive CSS; the same views adapt from desktop sidebar navigation to mobile drawer and bottom dock.
-- **Application core:** route state, command palette, localization, modal system, toast notifications, and module dispatch.
-- **Local persistence:** browser storage for preferences and workspace records; Web Crypto for encrypting Vault entries.
-- **Offline shell:** a service worker caches the static application assets for repeat visits.
+## 1. System context
 
-## Module boundaries
+```mermaid
+flowchart LR
+    PERSON["User"] --> APP["AETHER Web Application"]
+    APP --> BROWSER[("Browser Storage")]
+    APP --> CRYPTO["Web Crypto API"]
+    APP --> CACHE["Service Worker Cache"]
+    APP --> GH["GitHub Pages · Static Hosting"]
+```
 
-| Module | Responsibility | Persistence |
+## 2. Runtime layers
+
+| Layer | Responsibility | Main implementation |
 | --- | --- | --- |
-| Workspace | Tasks and local activity | Browser local storage |
-| Files | Text-file records and import/export | Browser local storage |
-| Studio | Notes and playground source | Browser local storage |
-| Vault | Private encrypted records | Encrypted browser local storage |
-| Network | URL, hash, UUID, and subnet helpers | No remote persistence |
-| Terminal | Built-in AETHER commands | In-memory session |
-| Analytics | Metrics derived from local data | Computed at runtime |
-| Control | Preferences and system status | Browser local storage |
-| Code Forge | Organization and project documentation | Repository content |
+| Presentation | Responsive shell, navigation, views, dialogs | HTML + CSS |
+| Application core | Routing, localization, commands, events, state | Vanilla JavaScript |
+| Persistence | Workspace records and preferences | localStorage |
+| Cryptography | Vault key derivation and authenticated encryption | Web Crypto API |
+| Offline shell | Static application asset cache | Service Worker |
+| Delivery | Static asset hosting and version history | GitHub Pages + Git |
 
-## Navigation and localization
+## 3. Module map
 
-Routes are represented by hash fragments (#overview, #workspace, and so on). The primary locale is English (en); Persian (fa) is provided as a secondary locale. Locale selection updates document direction and is stored locally.
+```mermaid
+flowchart TB
+    CORE["AETHER Core"]
+    CORE --> O["Overview"]
+    CORE --> W["Workspace"]
+    CORE --> F["Files"]
+    CORE --> S["Studio"]
+    CORE --> V["Vault"]
+    CORE --> N["Network"]
+    CORE --> T["Terminal"]
+    CORE --> A["Analytics"]
+    CORE --> C["Control"]
+    CORE --> CF["Code Forge"]
+    W --> DB[("Local Workspace State")]
+    F --> DB
+    S --> DB
+    A -. derives metrics .-> DB
+    V --> ENC["PBKDF2 key derivation"]
+    ENC --> AES["AES-GCM encryption"]
+    AES --> VD[("Encrypted Vault Records")]
+```
 
-## Privacy and boundaries
+## 4. State and persistence
 
-AETHER is local-first, not cloud-synchronized. Browser storage is scoped to the browser origin and device. Users should export important records. The Studio preview is isolated in a sandboxed iframe. The Terminal intentionally supports only documented application commands and does not invoke a system shell.
+The application loads a versioned workspace object from localStorage and merges it with defaults. Changes are persisted locally. There is no account service or remote database in the current release.
 
-## Future extension points
+| Data | Storage | Portability |
+| --- | --- | --- |
+| Tasks and activity | localStorage | Included in workspace JSON export |
+| Local text files | localStorage | Included in workspace JSON export |
+| Notes and Studio source | localStorage | Included in workspace JSON export |
+| Preferences | localStorage | Included in workspace JSON export |
+| Vault records | Encrypted localStorage values | Not included in workspace export |
 
-- A versioned import/export format for full workspace portability.
-- Optional user-controlled synchronization adapter.
-- Stronger automated tests for storage migrations and cryptographic record handling.
-- Separate modules with explicit interfaces while preserving the no-build static deployment option.
+## 5. Rendering and performance
+
+- The particle field uses a bounded particle count, a capped drawing resolution, and a spatial grid for nearby-line calculations.
+- Animation is paused when the document is hidden or the effect is disabled.
+- Rendering is frame-limited to reduce unnecessary work.
+- Reduced-motion preferences disable continuous particle animation.
+- The application avoids a framework runtime and third-party JavaScript bundles.
+
+## 6. Security boundaries
+
+- Vault encryption uses PBKDF2-derived keys and AES-GCM.
+- The passphrase and derived key are not persisted.
+- Studio preview content runs in a sandboxed iframe.
+- Terminal commands are application-level commands, not operating-system execution.
+- Network utilities perform local calculations and parsing; they do not probe remote hosts.
+
+## 7. Known limitations
+
+- No cross-device synchronization.
+- No server-side account or permission model.
+- Browser storage can be cleared or evicted.
+- Studio preview is for code the user chooses to test, not a security-analysis sandbox.
+- Vault security depends on device integrity and passphrase strength.
+
+## 8. Extension principles
+
+Future modules should preserve static deployment, clear ownership boundaries, accessible interactions, local-first defaults, and explicit disclosure whenever a capability requires a remote service or additional permission.
