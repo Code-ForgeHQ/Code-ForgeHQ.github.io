@@ -1,26 +1,42 @@
 # Contributing to AETHER
 
-Thanks for considering a contribution.
+<p align="right"><a href="README.md">← Project home</a></p>
 
-## Development guidelines
+![Contributions](https://img.shields.io/badge/contributions-welcome-ffffff?style=flat-square&labelColor=111820)
+![Code style](https://img.shields.io/badge/stack-vanilla%20web-9aa8b6?style=flat-square&labelColor=111820)
 
-1. Keep the application dependency-light and static-host compatible.
-2. Do not introduce AI APIs, remote model downloads, analytics trackers, or secret-bearing configuration.
-3. Keep the English interface primary and provide Persian translations for new user-facing strings.
-4. Test both narrow mobile layouts and wide desktop layouts.
-5. Respect prefers-reduced-motion and keep animation work bounded.
-6. Keep user data local by default. Any future synchronization feature must be explicit, documented, and opt-in.
-7. Never describe the built-in command console as an operating-system shell.
+Thank you for considering a contribution to AETHER.
+
+## Engineering principles
+
+1. Keep the project static-host compatible and dependency-light.
+2. Do not add AI APIs, hosted models, analytics trackers, or secret-bearing configuration.
+3. Keep English as the primary interface language and add Persian translations for new user-facing strings.
+4. Test narrow mobile layouts and wide desktop layouts.
+5. Respect `prefers-reduced-motion` and bound continuous animation work.
+6. Keep user data local by default. Any future synchronization must be explicit, optional, and documented.
+7. Keep the Terminal limited to documented AETHER commands; never imply it is a system shell.
+8. Document privacy and security implications for new storage or cryptographic behavior.
+
+## Development
+
+No package installation or build step is required. Clone the repository and open `index.html` for a basic preview. Use localhost or HTTPS to test service-worker and Web Crypto behavior.
 
 ## Pull request checklist
 
 - [ ] The feature works on desktop and mobile.
-- [ ] Keyboard navigation and visible focus states are preserved.
-- [ ] User-facing strings are available in English and Persian.
-- [ ] No third-party API or AI model is required.
-- [ ] Local data behavior and export implications are documented.
-- [ ] No secrets, credentials, or personal data are committed.
+- [ ] Keyboard focus and touch targets remain usable.
+- [ ] New user-facing strings are translated into English and Persian.
+- [ ] No external API, model, or runtime dependency was introduced.
+- [ ] Data storage, export, and deletion behavior are documented.
+- [ ] Reduced-motion behavior is respected.
+- [ ] No credentials, personal data, or generated build artifacts are committed.
+- [ ] The GitHub Actions quality workflow passes.
 
-## Reporting issues
+## Bug reports
 
-Use the repository issue tracker and include the browser, operating system, screen size, and steps to reproduce. Remove private content before attaching screenshots or logs.
+Include browser and version, operating system, screen size, expected behavior, actual behavior, and reproducible steps. Remove personal data and credentials from screenshots and logs.
+
+## Feature proposals
+
+Explain the user problem, the proposed capability, mobile and desktop behavior, and any privacy or network implications.
